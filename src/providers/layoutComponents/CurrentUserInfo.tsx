@@ -4,6 +4,7 @@ import { useClerk } from '@clerk/nextjs';
 import { Divider, Button, Avatar } from '@nextui-org/react';
 import { Drawer, Upload } from 'antd';
 import dayjs from 'dayjs';
+import { useRouter } from 'next/navigation';
 import React from 'react'
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
@@ -16,6 +17,7 @@ interface CurrentUserInfoProps {
 function CurrentUserInfo({showCurrentUserInfo,setShowCurrentUserInfo}: CurrentUserInfoProps) {
 
     const {signOut} = useClerk();
+    const router = useRouter();
 
     const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
     const [loading, setLoading] = React.useState(false);
@@ -37,6 +39,7 @@ function CurrentUserInfo({showCurrentUserInfo,setShowCurrentUserInfo}: CurrentUs
           await signOut();
           setShowCurrentUserInfo(false);
           toast.success("Logged out successfully");
+          router.push("/sign-in");
         } catch (error: any) {
           toast.error(error.message);
         } finally {
