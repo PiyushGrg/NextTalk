@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import CurrentUserInfo from './CurrentUserInfo';
 import { UserType } from '@/interfaces';
+import { useDispatch, useSelector } from 'react-redux';
+import { SetCurrentUser, UserState } from '@/redux/userSlice';
 
 function Header() {
 
@@ -16,7 +18,9 @@ function Header() {
         return null;
     }
 
-    const [currentUser, setCurrentUser] = useState<UserType | null>(null);
+    const dispatch = useDispatch();
+    
+    const {currentUserData} : UserState = useSelector((state: any) => state.user);
     const [showCurrentUserInfo, setShowCurrentUserInfo] = useState(false);
 
     const getCurrentUser = async () => {
@@ -25,7 +29,7 @@ function Header() {
             if (response.error) {
                 return toast.error(response.error);
             }
-            setCurrentUser(response);
+            dispatch(SetCurrentUser(response as UserType));
         } catch (error: any) {
           toast.error(error.message);
         }
@@ -42,8 +46,8 @@ function Header() {
         </div>
 
         <div className='flex gap-5 items-center'>
-            <span className='text-sm capitalize text-secondary'>{currentUser?.name}</span>
-            <Avatar src={currentUser?.profilePicUrl} alt='profile picture' 
+            <span className='text-sm capitalize text-secondary'>{currentUserData?.name}</span>
+            <Avatar src={currentUserData?.profilePicUrl} alt='profile picture' 
                 className='rounded-full cursor-pointer' 
                 onClick={() => setShowCurrentUserInfo(true)}    
             />
@@ -51,7 +55,6 @@ function Header() {
 
         {showCurrentUserInfo && (
           <CurrentUserInfo
-            currentUserInfo={currentUser}
             setShowCurrentUserInfo={setShowCurrentUserInfo}
             showCurrentUserInfo={showCurrentUserInfo}
           />

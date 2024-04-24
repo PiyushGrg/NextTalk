@@ -1,20 +1,26 @@
 import { UserType } from '@/interfaces';
-import { Divider, Button } from '@nextui-org/react';
+import { UserState } from '@/redux/userSlice';
+import { useClerk } from '@clerk/nextjs';
+import { Divider, Button, Avatar } from '@nextui-org/react';
 import { Drawer, Upload } from 'antd';
 import dayjs from 'dayjs';
 import React from 'react'
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 interface CurrentUserInfoProps {
-    currentUserInfo: UserType | null;
     showCurrentUserInfo: boolean;
     setShowCurrentUserInfo: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function CurrentUserInfo({currentUserInfo,showCurrentUserInfo,setShowCurrentUserInfo}: CurrentUserInfoProps) {
+function CurrentUserInfo({showCurrentUserInfo,setShowCurrentUserInfo}: CurrentUserInfoProps) {
+
+    const {signOut} = useClerk();
 
     const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
+    const [loading, setLoading] = React.useState(false);
 
+    const { currentUserData }: UserState = useSelector((state: any) => state.user);
 
     const getProperty = (key: string, value: any) => {
         return (
@@ -27,12 +33,14 @@ function CurrentUserInfo({currentUserInfo,showCurrentUserInfo,setShowCurrentUser
 
     const onLogout = async () => {
         try {
+          setLoading(true);
+          await signOut();
           setShowCurrentUserInfo(false);
           toast.success("Logged out successfully");
         } catch (error: any) {
           toast.error(error.message);
         } finally {
-          
+          setLoading(false);
         }
     };
 
@@ -45,12 +53,12 @@ function CurrentUserInfo({currentUserInfo,showCurrentUserInfo,setShowCurrentUser
         backgroundColor: "#E1F7F5"
       }}
     >
-      {currentUserInfo && (
+      {currentUserData && (
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-5 justify-center items-center">
             {!selectedFile && (
-              <img
-                src={currentUserInfo?.profilePicUrl}
+              <Avatar
+                src={currentUserData?.profilePicUrl}
                 alt="profile"
                 className="w-28 h-28 rounded-full"
               />
@@ -71,27 +79,27 @@ function CurrentUserInfo({currentUserInfo,showCurrentUserInfo,setShowCurrentUser
           <Divider orientation='horizontal' className="my-1 border-gray-200" />
 
           <div className="flex flex-col gap-5">
-            {getProperty("Name", currentUserInfo.name.toUpperCase())}
-            {getProperty("Phone", currentUserInfo.phone)}
-            {getProperty("ID", currentUserInfo._id)}
+            {getProperty("Name", currentUserData.name.toUpperCase())}
+            {getProperty("Phone", currentUserData.phone)}
+            {getProperty("ID", currentUserData._id)}
             {getProperty(
               "Joined On",
-              dayjs(currentUserInfo.createdAt).format("DD MMM YYYY hh:mm A")
+              dayjs(currentUserData.createdAt).format("DD MMM YYYY hh:mm A")
             )}
           </div>
 
           <div className="mt-5 flex flex-col gap-5">
             <Button
               className="w-full bg-rose-300"
-            //   loading={loading}
+              isLoading={loading && (selectedFile ? true : false)}
             //   onClick={onProfilePictureUpdate}
-              disabled={!selectedFile}
+              isDisabled={!selectedFile}
             >
               Update Profile Picture
             </Button>
             <Button
               className="w-full bg-secondary text-white"
-            //   loading={loading && !selectedFile}
+              isLoading={loading && !selectedFile}
               onClick={onLogout}
             >
               Logout

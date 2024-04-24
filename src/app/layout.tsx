@@ -3,6 +3,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import LayoutProvider from "@/providers/LayoutProvider";
 import UIProvider from "@/providers/UIProvider";
+import ReduxProvider from "@/providers/ReduxProvider";
 
 export const metadata: Metadata = {
   title: "NextTalk",
@@ -29,9 +30,11 @@ export default function RootLayout({
       <html lang="en">
         <body>
           <UIProvider>
-            <LayoutProvider>
-              {children}
-            </LayoutProvider>
+            <ReduxProvider>
+              <LayoutProvider>
+                {children}
+              </LayoutProvider>
+            </ReduxProvider>
           </UIProvider>
         </body>
       </html>
