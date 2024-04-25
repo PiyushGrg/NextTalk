@@ -1,5 +1,7 @@
+import { UploadImageToFirebaseAndReturnUrl } from '@/helpers/ImageUpload';
 import { UserType } from '@/interfaces';
-import { UserState } from '@/redux/userSlice';
+import { SetCurrentUser, UserState } from '@/redux/userSlice';
+import { UpdateUserProfile } from '@/server-actions/users';
 import { useClerk } from '@clerk/nextjs';
 import { Divider, Button, Avatar } from '@nextui-org/react';
 import { Drawer, Upload } from 'antd';
@@ -7,7 +9,7 @@ import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 import toast from 'react-hot-toast';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface CurrentUserInfoProps {
     showCurrentUserInfo: boolean;
@@ -18,6 +20,7 @@ function CurrentUserInfo({showCurrentUserInfo,setShowCurrentUserInfo}: CurrentUs
 
     const {signOut} = useClerk();
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
     const [loading, setLoading] = React.useState(false);
@@ -31,6 +34,28 @@ function CurrentUserInfo({showCurrentUserInfo,setShowCurrentUserInfo}: CurrentUs
             <span className="text-gray-600">{value}</span>
           </div>
         );
+    };
+
+    const onProfilePictureUpdate = async () => {
+      try {
+        setLoading(true);
+        const url: string = await UploadImageToFirebaseAndReturnUrl(selectedFile!);
+
+        const response = await UpdateUserProfile(currentUserData?._id!, {
+          profilePicUrl: url,
+        });
+
+        if (response.error) throw new Error(response.error);
+
+        dispatch(SetCurrentUser(response));
+        toast.success("Profile picture updated successfully");
+        setShowCurrentUserInfo(false);
+      } catch (error: any) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+        setSelectedFile(null);
+      }
     };
 
     const onLogout = async () => {
@@ -68,10 +93,21 @@ function CurrentUserInfo({showCurrentUserInfo,setShowCurrentUserInfo}: CurrentUs
             )}
             <Upload
               beforeUpload={(file) => {
-                setSelectedFile(file);
-                return false;
+                const isImage = /\.(png|jpg|jpeg)$/i.test(file.name);
+                if (!isImage) {
+                  toast.error('Only image files are allowed');
+                  setSelectedFile(null);
+                  return false;
+                }
+                if(isImage){
+                  setSelectedFile(file);
+                  return false;
+                }
               }}
+              accept=".png,.jpg,.jpeg"
               className="cursor-pointer"
+              onRemove={() => setSelectedFile(null)}
+              showUploadList={{ showPreviewIcon: false }}
               listType={selectedFile ? "picture-circle" : "text"}
               maxCount={1}
             >
@@ -95,7 +131,7 @@ function CurrentUserInfo({showCurrentUserInfo,setShowCurrentUserInfo}: CurrentUs
             <Button
               className="w-full bg-rose-300"
               isLoading={loading && (selectedFile ? true : false)}
-            //   onClick={onProfilePictureUpdate}
+              onClick={onProfilePictureUpdate}
               isDisabled={!selectedFile}
             >
               Update Profile Picture
