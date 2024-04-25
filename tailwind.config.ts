@@ -32,8 +32,6 @@ const config: Config = {
       }
     }
   })],
-  corePlugins: {
-    preflight: false,
-  },
 };
+
 export default config;
