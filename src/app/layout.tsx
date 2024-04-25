@@ -18,6 +18,9 @@ export default function RootLayout({
   return (
     <ClerkProvider
       appearance={{
+        layout: {
+          logoImageUrl: '/logo.svg',
+        },
         variables: {
           colorText: "#000",
           colorPrimary: "#1B1A55",

@@ -105,7 +105,7 @@ function NewChatModal({showNewChatModal,setShowNewChatModal}: NewChatModalProps)
 
                 {loading && !selectedUserId && (
                     <div className="flex justify-center my-20">
-                        <Spinner />
+                        <Spinner color='secondary' />
                     </div>
                 )}
               </ModalBody>

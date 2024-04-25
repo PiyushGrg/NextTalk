@@ -28,6 +28,10 @@ html,body {
     width: 450px !important;
 }
 
+.cl-logoImage{
+    width: 75px !important;
+    height: 75px !important;
+}
 
 /* scroll bar styling */
 
