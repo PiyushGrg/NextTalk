@@ -15,9 +15,8 @@ function ChatsHeader() {
             <Dropdown>
                 <DropdownTrigger>
                     <Button 
-                        color="primary"
                         variant="solid"
-                        className="capitalize text-secondary font-semibold w-max"
+                        className="capitalize text-secondary font-semibold w-max bg-primary-default"
                     >
                         New
                     </Button>

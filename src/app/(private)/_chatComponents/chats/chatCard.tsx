@@ -32,7 +32,7 @@ function ChatCard({chat}:{chat:ChatType}) {
 
   return (
     <div className={`flex justify-between py-3 cursor-pointer px-2 rounded
-        ${isSelected ? "bg-primary" : "hover:bg-primary/50"}`}
+        ${isSelected ? "bg-primary-dark/40" : "hover:bg-primary-default/60"}`}
         onClick={() => {
             dispatch(SetSelectedChat(chat));
         }}

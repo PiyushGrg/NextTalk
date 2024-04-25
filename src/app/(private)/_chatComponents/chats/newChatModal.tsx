@@ -54,8 +54,8 @@ function NewChatModal({showNewChatModal,setShowNewChatModal}: NewChatModalProps)
             if (response.error) throw new Error(response.error);
 
             toast.success("Chat created successfully");
-            setShowNewChatModal(false);
             dispatch(SetChats(response));
+            setShowNewChatModal(false);
         } catch (error: any) {
             toast.error(error.message);
         } finally {
@@ -71,7 +71,7 @@ function NewChatModal({showNewChatModal,setShowNewChatModal}: NewChatModalProps)
     <Modal isOpen={showNewChatModal} onOpenChange={()=>setShowNewChatModal(false)}>
         <ModalContent>
             <>
-              <ModalHeader className="flex flex-col gap-5 text-secondary text-center">Create New Chat</ModalHeader>
+              <ModalHeader className="flex flex-col gap-5 text-secondary/85 text-center">Create New Chat</ModalHeader>
               
               <ModalBody>
                 {!loading && users.length > 0 && (
@@ -91,7 +91,7 @@ function NewChatModal({showNewChatModal,setShowNewChatModal}: NewChatModalProps)
                                             <span className='text-gray-600 capitalize'>{user.name}</span>
                                         </div>
 
-                                        <Button color='secondary' variant='ghost' size='sm' isLoading={selectedUserId===user._id && loading}
+                                        <Button className='bg-primary-dark/85 border-none' size='sm' isLoading={selectedUserId===user._id && loading}
                                             onClick={() => onAddToChat(user._id)}
                                         >
                                             Add To Chat

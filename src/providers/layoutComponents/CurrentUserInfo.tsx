@@ -78,7 +78,7 @@ function CurrentUserInfo({showCurrentUserInfo,setShowCurrentUserInfo}: CurrentUs
       onClose={() => setShowCurrentUserInfo(false)}
       title="Profile"
       style={{
-        backgroundColor: "#E1F7F5"
+        backgroundColor: "#9AC8CD"
       }}
     >
       {currentUserData && (
@@ -129,7 +129,7 @@ function CurrentUserInfo({showCurrentUserInfo,setShowCurrentUserInfo}: CurrentUs
 
           <div className="mt-5 flex flex-col gap-5">
             <Button
-              className="w-full bg-rose-300"
+              className="w-full bg-rose-400"
               isLoading={loading && (selectedFile ? true : false)}
               onClick={onProfilePictureUpdate}
               isDisabled={!selectedFile}

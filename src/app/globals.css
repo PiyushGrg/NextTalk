@@ -25,12 +25,13 @@ html,body {
 }
 
 .cl-signUp-start{
-    width: 450px !important;
+  width: 450px !important;
 }
 
 .cl-logoImage{
-    width: 75px !important;
-    height: 75px !important;
+  width: 75px !important;
+  height: 75px !important;
+  margin-bottom: 6px !important;
 }
 
 /* scroll bar styling */
