@@ -1,3 +1,4 @@
+import { formatDateTime } from '@/helpers/DateFormat';
 import { ChatType } from '@/interfaces'
 import { ChatState, SetSelectedChat } from '@/redux/chatSlice';
 import { UserState } from '@/redux/userSlice';
@@ -28,7 +29,24 @@ function ChatCard({chat}:{chat:ChatType}) {
         chatImage = receipient?.profilePicUrl!;
     }
 
+
+    if(chat.lastMessage){
+        lastMessage = chat.lastMessage.text.length > 15 ? chat.lastMessage.text.substring(0, 15) + '...' : chat.lastMessage.text;
+        lastMessageSenderName = chat.lastMessage.sender._id === currentUserData?._id! ? 'You :' : `${chat.lastMessage.sender.name} :`;
+        lastMessageTime = formatDateTime(chat.lastMessage.createdAt);
+    }
+
     const isSelected = selectedChat?._id === chat._id;
+
+    const unreadCount = () => {
+        if(!chat.unreadCounts || chat.unreadCounts[currentUserData?._id!]===0){
+            return null;
+        }
+
+        return <div className='bg-rose-600 h-5 w-5 rounded-full flex justify-center items-center'>
+            <span className='text-white text-xs'>{chat.unreadCounts[currentUserData?._id!]}</span>
+        </div>
+    }
 
   return (
     <div className={`flex justify-between py-3 cursor-pointer px-2 rounded
@@ -39,11 +57,15 @@ function ChatCard({chat}:{chat:ChatType}) {
     >
         <div className='flex gap-5 items-center'>
             <Avatar src={chatImage} alt="" className='w-10 h-10 rounded-full'/>
-            <span className='capitalize text-gray-700 text-sm'>{chatName}</span>
+            <div className='flex flex-col gap-1'>
+                <span className='capitalize text-gray-700 text-sm'>{chatName}</span>
+                <span className='capitalize text-gray-500 text-xs'>{lastMessageSenderName} {lastMessage}</span>
+            </div>
         </div>
 
         <div>
-            <span>{lastMessageTime}</span>
+            {unreadCount()}
+            <span className='text-xs text-gray-500'>{lastMessageTime}</span>
         </div>
     </div>
   )

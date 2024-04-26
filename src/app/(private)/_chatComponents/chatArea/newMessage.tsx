@@ -1,7 +1,7 @@
 import { ChatState } from '@/redux/chatSlice';
 import { UserState } from '@/redux/userSlice';
 import { sendNewMessage } from '@/server-actions/messages';
-import { Image } from '@nextui-org/react'
+import { Button, Image } from '@nextui-org/react'
 import { Input } from 'antd'
 import React from 'react'
 import toast from 'react-hot-toast';
@@ -16,6 +16,10 @@ function NewMessage() {
 
   const onSend = async () => {
     try {
+      if(!text){
+        return;
+      }
+      
       const dbPayload = {
         text,
         image: '',
@@ -46,13 +50,20 @@ function NewMessage() {
 
       <div className='flex-1'>
         <Input placeholder='Type a message' 
-          className='w-full h-[45px] px-3 border border-solid border-gray-300 outline-none focus:outline-none focus:border-secondary'
+          className='w-full h-[50px] px-3 border border-solid border-gray-300 outline-none focus:outline-none focus:border-secondary'
           value={text}
           onChange={(e) => setText(e.target.value)} 
+          onKeyDown={(e) => {
+            if(e.key === 'Enter') {
+              onSend();
+            }
+          }}
         />
       </div>
 
-      <Image src='/send.svg' alt='' className='h-[22px] w-[22px]' onClick={onSend} />
+      <Button onClick={onSend} variant='bordered' size='lg' color='secondary'>
+        <Image src='/send.svg' alt='' className='h-[20px] w-[20px]' />
+      </Button>
       
     </div>
   )

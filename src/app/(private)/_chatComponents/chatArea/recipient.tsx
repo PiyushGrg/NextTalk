@@ -24,7 +24,7 @@ function Recipient() {
     }
 
   return (
-    <div className='flex justify-between bg-primary-default px-4 py-3 border-b border-gray-400 border-solid'>
+    <div className='flex justify-between bg-gray-100 px-4 py-3 border-b border-gray-400 border-solid'>
         <div className='flex items-center gap-3'>
             <Image src='/back.svg' className='w-[15px] h-[15px] cursor-pointer' onClick={()=>{dispatch(SetSelectedChat(null))}}/>
             <div className='flex flex-row items-center gap-2'>

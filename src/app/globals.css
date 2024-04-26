@@ -38,17 +38,17 @@ html,body {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 8px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #e2e2e2;
+  background: #E1F7F5;
 }
 
 /* thumb */
 ::-webkit-scrollbar-thumb {
-  background: #c2c2c2;
+  background: #9AC8CD;
 }
 
 
