@@ -40,7 +40,8 @@ function Header() {
     }, []);
 
   return (
-    <div className='bg-primary-dark w-full px-3 py-3 flex justify-between items-center border-0 border-b border-solid border-gray-300'>
+    currentUserData && 
+      <div className='bg-primary-dark w-full px-3 py-3 flex justify-between items-center border-0 border-b border-solid border-gray-300'>
         <div>
             <h1 className='text-2xl text-secondary font-semibold uppercase'>Next Talk</h1>
         </div>
@@ -59,7 +60,7 @@ function Header() {
             showCurrentUserInfo={showCurrentUserInfo}
           />
         )}
-    </div>
+      </div>
   )
 }
 

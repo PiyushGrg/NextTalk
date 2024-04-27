@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
 import NewChatModal from './newChatModal';
 import { Input } from 'antd';
+import { useRouter } from 'next/navigation';
 
 
 function ChatsHeader() {
 
+    const router = useRouter();
     const [showNewChatModal, setShowNewChatModal] = useState(false);
 
   return (
@@ -27,7 +29,7 @@ function ChatsHeader() {
                     variant="solid"
                 >
                     <DropdownItem key="1" onClick={()=>{setShowNewChatModal(true)}}>New Chat</DropdownItem>
-                    <DropdownItem key="2">New Group</DropdownItem>
+                    <DropdownItem key="2" onClick={()=>router.push("/groups/createGroup")}>New Group</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
         </div>

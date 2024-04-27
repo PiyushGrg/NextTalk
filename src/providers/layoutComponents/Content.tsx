@@ -1,5 +1,8 @@
+import Loader from "@/components/Loader";
+import { UserState } from "@/redux/userSlice";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { useSelector } from "react-redux";
 
 function Content({ children }: { children: React.ReactNode }) {
 
@@ -9,6 +12,10 @@ function Content({ children }: { children: React.ReactNode }) {
   if (isPublicRoute){
     return children;
   }
+
+  const { currentUserData }: UserState = useSelector((state: any) => state.user);
+
+  if (!currentUserData) return <Loader />;
 
   return <div>{children}</div>;
 }

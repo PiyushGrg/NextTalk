@@ -5,6 +5,8 @@ import {
  
 const isProtectedRoute = createRouteMatcher([
   '/',
+  '/groups/createGroup',
+  '/groups/editGroup/[groupId]',
 ]);
  
 export default clerkMiddleware((auth, req) => {

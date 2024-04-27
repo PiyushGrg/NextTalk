@@ -44,3 +44,18 @@ export const GetAllChats = async (userId: string) => {
     };
   }
 };
+
+
+export const UpdateChat = async ({chatId,payload}: {chatId: string;payload: any}) => {
+  try {
+    await ChatModel.findByIdAndUpdate(chatId, payload);
+
+    return {
+      message: "Chat updated successfully",
+    };
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
