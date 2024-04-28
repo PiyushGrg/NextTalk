@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const messageSchema = new mongoose.Schema(
   {
+    socketMessageId: {
+      type: String,
+      default: "",
+    },
     chat: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "chats",

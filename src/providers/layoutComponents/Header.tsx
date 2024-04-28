@@ -6,7 +6,8 @@ import toast from 'react-hot-toast';
 import CurrentUserInfo from './CurrentUserInfo';
 import { UserType } from '@/interfaces';
 import { useDispatch, useSelector } from 'react-redux';
-import { SetCurrentUser, UserState } from '@/redux/userSlice';
+import { SetCurrentUser, SetOnlineUsers, UserState } from '@/redux/userSlice';
+import socket from '@/config/socketConfig';
 
 function Header() {
 
@@ -38,6 +39,17 @@ function Header() {
     useEffect(() => {
         getCurrentUser();
     }, []);
+
+
+    useEffect(() => {
+      if(currentUserData){
+        socket.emit('join', currentUserData._id);
+
+        socket.on("online-users-updated", (onlineUsers: string[]) => {
+          dispatch(SetOnlineUsers(onlineUsers));
+        });
+      }
+    },[currentUserData]);
 
   return (
     currentUserData && 

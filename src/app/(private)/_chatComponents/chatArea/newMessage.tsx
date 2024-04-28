@@ -1,8 +1,10 @@
+import socket from '@/config/socketConfig';
 import { ChatState } from '@/redux/chatSlice';
 import { UserState } from '@/redux/userSlice';
 import { sendNewMessage } from '@/server-actions/messages';
-import { Button, Image } from '@nextui-org/react'
+import { Button, Image, image } from '@nextui-org/react'
 import { Input } from 'antd'
+import dayjs from 'dayjs';
 import React from 'react'
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
@@ -20,20 +22,27 @@ function NewMessage() {
         return;
       }
       
+      const socketPayload = {
+        text,
+        image: '',
+        socketMessageId: dayjs().unix(),
+        sender: currentUserData,
+        chat: selectedChat
+      };
+
+      socket.emit("send-new-message",socketPayload);
+
       const dbPayload = {
         text,
         image: '',
+        socketMessageId: dayjs().unix(),
         sender: currentUserData?._id!,
         chat: selectedChat?._id!
       };
 
-      const response = await sendNewMessage(dbPayload);
+      sendNewMessage(dbPayload);
 
-      if(response.error) {
-        throw new Error(response.error);
-      }
-
-      console.log(response.data);
+      // console.log(response.data);
       setText('');
 
     } catch (error:any) {

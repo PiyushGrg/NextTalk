@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import Message from './message';
 import { UserState } from '@/redux/userSlice';
+import socket from '@/config/socketConfig';
 
 function Messages() {
 
@@ -14,6 +15,8 @@ function Messages() {
 
   const {selectedChat}: ChatState =  useSelector((state: any) => state.chat);
   const {currentUserData}: UserState = useSelector((state: any) => state.user);
+
+  const messagesDivRef = React.useRef<HTMLDivElement>(null);
 
   const getMessages = async () => {
     try {
@@ -38,8 +41,27 @@ function Messages() {
     ReadAllMessages({chatId: selectedChat?._id!, userId: currentUserData?._id!});
   }, [selectedChat]);
 
+  useEffect(() => {
+    socket.on("new-message-received", (message: MessageType) => {
+      if(selectedChat?._id === message.chat._id){
+        setMessages((prev) => {
+          const isMessageAlreadyExists: any = prev.find((msg) => msg.socketMessageId === message.socketMessageId);
+          if (isMessageAlreadyExists) return prev;
+          else return [...prev, message];
+        });
+      }
+    });
+  }, [selectedChat]);
+
+
+  useEffect(() => {
+    if (messagesDivRef.current) {
+      messagesDivRef.current.scrollTop = messagesDivRef.current.scrollHeight + 100;
+    }
+  }, [messages]);
+
   return (
-    <div className='flex-1 p-3 overflow-y-scroll'>
+    <div className='flex-1 p-3 overflow-y-scroll' ref={messagesDivRef}>
       <div className='flex flex-col gap-3'>
         {messages.map((message: MessageType) => {
           return <Message key={message._id} message={message} />;

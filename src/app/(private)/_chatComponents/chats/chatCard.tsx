@@ -10,7 +10,7 @@ function ChatCard({chat}:{chat:ChatType}) {
 
     const dispatch = useDispatch();
 
-    const {currentUserData}: UserState = useSelector((state: any) => state.user);
+    const {currentUserData,onlineUsers}: UserState = useSelector((state: any) => state.user);
     const {selectedChat}:ChatState = useSelector((state: any) => state.chat);
 
     let chatName = '';
@@ -48,6 +48,17 @@ function ChatCard({chat}:{chat:ChatType}) {
         </div>
     }
 
+    const onlineIndicator = () => {
+        if(chat.isGroupChat){
+            return null;
+        }
+
+        const recipientId = chat.users.find((user) => user._id !== currentUserData?._id)?._id;
+        if (onlineUsers.includes(recipientId!)) {
+            return <div className="w-2 h-2 rounded-full bg-green-600"></div>;
+        }
+    }
+
   return (
     <div className={`flex justify-between py-3 cursor-pointer px-2 rounded
         ${isSelected ? "bg-primary-dark/40" : "hover:bg-primary-default/60"}`}
@@ -58,7 +69,7 @@ function ChatCard({chat}:{chat:ChatType}) {
         <div className='flex gap-5 items-center'>
             <Avatar src={chatImage} alt="" className='w-10 h-10 rounded-full'/>
             <div className='flex flex-col gap-1'>
-                <span className='capitalize text-gray-700 text-sm'>{chatName}</span>
+                <span className='capitalize text-gray-700 text-sm flex gap-2 items-center'>{chatName} {onlineIndicator()}</span>
                 <span className='capitalize text-gray-500 text-xs'>{lastMessageSenderName} {lastMessage}</span>
             </div>
         </div>
