@@ -1,3 +1,4 @@
+"use client";
 import { GetCurrentUserFromMongoDB } from '@/server-actions/users';
 import { Avatar } from '@nextui-org/react';
 import { usePathname } from 'next/navigation';
