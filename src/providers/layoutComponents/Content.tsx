@@ -9,11 +9,11 @@ function Content({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isPublicRoute = pathname.includes("sign-in") || pathname.includes("sign-up");
 
+  const { currentUserData }: UserState = useSelector((state: any) => state.user);
+
   if (isPublicRoute){
     return children;
   }
-
-  const { currentUserData }: UserState = useSelector((state: any) => state.user);
 
   if (!currentUserData) return <Loader />;
 

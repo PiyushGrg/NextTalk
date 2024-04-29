@@ -15,10 +15,6 @@ function Header() {
     const pathname = usePathname();
   
     const isPublicRoute = pathname.includes("sign-in") || pathname.includes("sign-up");
-  
-    if (isPublicRoute){
-        return null;
-    }
 
     const dispatch = useDispatch();
     
@@ -51,6 +47,10 @@ function Header() {
         });
       }
     },[currentUserData]);
+
+    if (isPublicRoute){
+      return null;
+    }
 
   return (
     currentUserData && 
