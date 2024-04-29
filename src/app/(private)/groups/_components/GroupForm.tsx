@@ -108,10 +108,10 @@ function GroupForm({users,initialData = null}: {users: UserType[];initialData?: 
             label="Group Name"
             rules={[{ required: true, message: "Please input group name!" }]}
           >
-            <Input className="border-solid border-gray-300 outline-none focus:outline-none focus:border-secondary"/>
+            <input className="border-solid border-gray-300 outline-none focus:outline-none focus:border-secondary"/>
           </Form.Item>
           <Form.Item name="groupDescription" label="Group Description" initialValue={initialData?.groupBio}>
-            <Input.TextArea className="border-solid border-gray-300 outline-none focus:outline-none focus:border-secondary"/>
+            <textarea className="border-solid border-gray-300 outline-none focus:outline-none focus:border-secondary"/>
           </Form.Item>
 
           <Upload

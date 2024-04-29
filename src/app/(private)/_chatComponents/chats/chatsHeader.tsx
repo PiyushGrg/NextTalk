@@ -34,7 +34,7 @@ function ChatsHeader() {
             </Dropdown>
         </div>
 
-        <Input
+        <input
             placeholder="Search chats..."
             className="w-full border border-gray-300 border-solid outline-none rounded-md px-3 h-12 mt-3 focus:outline-none focus:border-secondary"
         />

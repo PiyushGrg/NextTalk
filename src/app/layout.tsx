@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import LayoutProvider from "@/providers/LayoutProvider";
 import UIProvider from "@/providers/UIProvider";
 import ReduxProvider from "@/providers/ReduxProvider";
+import 'remixicon/fonts/remixicon.css';
 
 export const metadata: Metadata = {
   title: "NextTalk",

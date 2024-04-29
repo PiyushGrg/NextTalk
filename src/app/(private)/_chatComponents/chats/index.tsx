@@ -4,7 +4,7 @@ import ChatsList from './chatsList'
 
 function Chats() {
   return (
-    <div className='w-[400px] h-full p-3'>
+    <div className='lg:w-[400px] w-[350px] h-full p-3'>
         <ChatsHeader />
         <ChatsList />
     </div>

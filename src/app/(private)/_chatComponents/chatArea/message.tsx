@@ -17,9 +17,14 @@ function Message({message}: {message: MessageType}) {
         return (
             <div className='flex justify-end gap-2'>
                 <div className='flex flex-col gap-1'>
-                    <p className='bg-secondary text-white py-2 px-3 rounded-lg rounded-tr-none'>
-                        {message.text}
-                    </p>
+                    {message.text && (
+                        <p className='bg-secondary text-white py-2 px-3 rounded-lg rounded-tr-none'>
+                            {message.text}
+                        </p>
+                    )}
+                    {message.image && (
+                        <Image src={message.image} className='h-40 w-40 rounded-lg rounded-tr-none' alt='message-image' />
+                    )}
                     <span className='text-gray-500 text-xs'>
                         {formatDateTime(message.createdAt)}
                     </span>
@@ -36,9 +41,14 @@ function Message({message}: {message: MessageType}) {
                 <div className='flex flex-col gap-1'>
                     <div className='bg-gray-200/75 rounded-lg rounded-tl-none px-3 flex flex-col py-1'>
                         <span className='text-secondary capitalize text-xs font-semibold'>{message.sender.name}</span>
-                        <p>
-                            {message.text}
-                        </p>
+                        {message.text && (
+                            <p>
+                                {message.text}
+                            </p>
+                        )}
+                        {message.image && (
+                            <Image src={message.image} className='h-40 w-40 rounded-lg rounded-tl-none' alt='message-image' />
+                        )}
                     </div>
                     <span className='text-gray-500 text-xs'>
                         {formatDateTime(message.createdAt)}

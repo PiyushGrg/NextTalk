@@ -31,15 +31,21 @@ function ChatCard({chat}:{chat:ChatType}) {
 
 
     if(chat.lastMessage){
-        lastMessage = chat.lastMessage.text.length > 15 ? chat.lastMessage.text.substring(0, 15) + '...' : chat.lastMessage.text;
         lastMessageSenderName = chat.lastMessage.sender._id === currentUserData?._id! ? 'You :' : `${chat.lastMessage.sender.name} :`;
         lastMessageTime = formatDateTime(chat.lastMessage.createdAt);
+
+        if(chat.lastMessage.text){
+            lastMessage = chat.lastMessage.text.length > 15 ? chat.lastMessage.text.substring(0, 15) + '...' : chat.lastMessage.text;
+        }
+        if(chat.lastMessage.image){
+            lastMessage = 'Sent a photo';
+        }
     }
 
     const isSelected = selectedChat?._id === chat._id;
 
     const unreadCount = () => {
-        if(!chat.unreadCounts || chat.unreadCounts[currentUserData?._id!]===0){
+        if(!chat.unreadCounts || !chat.unreadCounts[currentUserData?._id!] || chat._id === selectedChat?._id){
             return null;
         }
 

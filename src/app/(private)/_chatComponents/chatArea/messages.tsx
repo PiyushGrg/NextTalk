@@ -1,19 +1,21 @@
 import { MessageType } from '@/interfaces';
-import { ChatState } from '@/redux/chatSlice';
+import { ChatState, SetChats } from '@/redux/chatSlice';
 import { GetChatMessages, ReadAllMessages } from '@/server-actions/messages';
 import React, { useEffect } from 'react'
 import toast from 'react-hot-toast';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Message from './message';
 import { UserState } from '@/redux/userSlice';
 import socket from '@/config/socketConfig';
 
 function Messages() {
 
+  const dispatch = useDispatch();
+
   const [messages, setMessages] = React.useState<MessageType[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const {selectedChat}: ChatState =  useSelector((state: any) => state.chat);
+  const {selectedChat, chats}: ChatState =  useSelector((state: any) => state.chat);
   const {currentUserData}: UserState = useSelector((state: any) => state.user);
 
   const messagesDivRef = React.useRef<HTMLDivElement>(null);
@@ -38,7 +40,6 @@ function Messages() {
 
   useEffect(() => {
     getMessages();
-    ReadAllMessages({chatId: selectedChat?._id!, userId: currentUserData?._id!});
   }, [selectedChat]);
 
   useEffect(() => {
@@ -58,6 +59,21 @@ function Messages() {
     if (messagesDivRef.current) {
       messagesDivRef.current.scrollTop = messagesDivRef.current.scrollHeight + 100;
     }
+
+    ReadAllMessages({chatId: selectedChat?._id!, userId: currentUserData?._id!});
+
+    //set the unread messages to 0 for the selected chat
+    const newChats = chats.map((chat) => {
+      if(chat._id === selectedChat?._id){
+        let chatData = {...chat};
+        chatData.unreadCounts = {...chat.unreadCounts};
+        chatData.unreadCounts[currentUserData?._id!] = 0;
+        return chatData;
+      }
+      return chat;
+    });
+
+    dispatch(SetChats(newChats));
   }, [messages]);
 
   return (
