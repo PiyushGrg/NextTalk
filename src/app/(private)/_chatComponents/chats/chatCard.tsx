@@ -22,7 +22,7 @@ function ChatCard({chat}:{chat:ChatType}) {
 
     if (chat.isGroupChat) {
         chatName = chat.groupName;
-        chatImage = chat.groupProfilePicture;
+        chatImage = chat.groupProfilePicture || "https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18yZlhiQnlkbWFSZVRqakJSbm1iUnBKdUlaY2UiLCJyaWQiOiJ1c2VyXzJmYVd4VTFoR1ZmNFIyRHc4WkRLTWVDNkFhVCJ9";
     } else {
         const receipient = chat.users.find((user) => user._id !== currentUserData?._id);
         chatName = receipient?.name!;
@@ -30,14 +30,14 @@ function ChatCard({chat}:{chat:ChatType}) {
     }
 
 
-    if(chat.lastMessage){
-        lastMessageSenderName = chat.lastMessage.sender._id === currentUserData?._id! ? 'You :' : `${chat.lastMessage.sender.name} :`;
+    if(chat?.lastMessage){
+        lastMessageSenderName = chat?.lastMessage?.sender._id === currentUserData?._id! ? 'You :' : `${chat?.lastMessage?.sender.name} :`;
         lastMessageTime = formatDateTime(chat.lastMessage.createdAt);
 
-        if(chat.lastMessage.text){
+        if(chat?.lastMessage?.text){
             lastMessage = chat.lastMessage.text.length > 15 ? chat.lastMessage.text.substring(0, 15) + '...' : chat.lastMessage.text;
         }
-        if(chat.lastMessage.image){
+        if(chat?.lastMessage?.image){
             lastMessage = 'Sent a photo';
         }
     }
@@ -45,7 +45,7 @@ function ChatCard({chat}:{chat:ChatType}) {
     const isSelected = selectedChat?._id === chat._id;
 
     const unreadCount = () => {
-        if(!chat.unreadCounts || !chat.unreadCounts[currentUserData?._id!] || chat._id === selectedChat?._id){
+        if(!chat?.unreadCounts || !chat?.unreadCounts[currentUserData?._id!] || chat._id === selectedChat?._id){
             return null;
         }
 

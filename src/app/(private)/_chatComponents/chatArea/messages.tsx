@@ -52,6 +52,24 @@ function Messages() {
         });
       }
     });
+
+
+    // listen for user-read-all-chat-messages event
+    socket.on("user-read-all-chat-messages",({ chatId, readByUserId }: { chatId: string; readByUserId: string }) => {
+        if (selectedChat?._id === chatId) {
+          setMessages((prev) => {
+            const newMessages = prev.map((msg) => {
+              if (msg.sender._id !== readByUserId && !msg.readBy.includes(readByUserId)) {
+                return { ...msg, readBy: [...msg.readBy, readByUserId] };
+              }
+              return msg;
+            });
+
+            return newMessages;
+          });
+        }
+    });
+    
   }, [selectedChat]);
 
 
@@ -60,7 +78,24 @@ function Messages() {
       messagesDivRef.current.scrollTop = messagesDivRef.current.scrollHeight + 100;
     }
 
-    ReadAllMessages({chatId: selectedChat?._id!, userId: currentUserData?._id!});
+    // clear unread messages
+
+    let unreadMessages = 0;
+    let chat = chats.find((chat) => chat._id === selectedChat?._id);
+    if (chat && chat.unreadCounts) {
+      unreadMessages = chat?.unreadCounts[currentUserData?._id!] || 0;
+    }
+
+    if(unreadMessages > 0){
+      ReadAllMessages({chatId: selectedChat?._id!, userId: currentUserData?._id!});
+
+      socket.emit("read-all-messages", {
+        chatId: selectedChat?._id!, 
+        userId: currentUserData?._id!,
+        users: selectedChat?.users.filter((user) => user._id !== currentUserData?._id!).map((user) => user._id),
+      });
+
+    }
 
     //set the unread messages to 0 for the selected chat
     const newChats = chats.map((chat) => {

@@ -23,7 +23,7 @@ function RecipientInfo({showRecipientInfo,setShowRecipientInfo}: RecipientInfoPr
   let chatImage = "";
   if (selectedChat?.isGroupChat) {
     chatName = selectedChat.groupName;
-    chatImage = selectedChat.groupProfilePicture;
+    chatImage = selectedChat.groupProfilePicture || "https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18yZlhiQnlkbWFSZVRqakJSbm1iUnBKdUlaY2UiLCJyaWQiOiJ1c2VyXzJmYVd4VTFoR1ZmNFIyRHc4WkRLTWVDNkFhVCJ9";
   } else {
     const receipient = selectedChat?.users.find((user) => user._id !== selectedChat?._id);
     chatName = receipient?.name!;

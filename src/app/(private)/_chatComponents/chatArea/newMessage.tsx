@@ -43,6 +43,7 @@ function NewMessage() {
         socketMessageId: dayjs().unix(),
         sender: currentUserData,
         chat: selectedChat,
+        readBy: [],
         createdAt: dayjs().toISOString(),
         updatedAt: dayjs().toISOString()
       };
@@ -55,6 +56,7 @@ function NewMessage() {
         socketMessageId: dayjs().unix(),
         sender: currentUserData?._id!,
         chat: selectedChat?._id!,
+        readBy: [],
         createdAt: dayjs().toISOString(),
         updatedAt: dayjs().toISOString()
       };
