@@ -25,7 +25,7 @@ function Header() {
         try {
           const response = await GetCurrentUserFromMongoDB();
             if (response.error) {
-                return toast.error(response.error);
+                return;
             }
             dispatch(SetCurrentUser(response as UserType));
         } catch (error: any) {
