@@ -44,6 +44,16 @@ function Message({message}: {message: MessageType}) {
                     {message.image && (
                         <Image src={message.image} className='h-40 w-40 rounded-lg rounded-tr-none' alt='message-image' />
                     )}
+
+                    {message.file && (
+                        <a href={message.file} target="_blank" rel="noopener noreferrer" className='text-rose-600'>
+                            <div className='flex gap-1'>
+                                <i className="ri-file-line"></i>
+                                View File
+                            </div>
+                        </a>   
+                    )}
+
                     {message.text && (
                         <p className='bg-secondary text-white py-2 px-3 rounded-lg rounded-tr-none'>
                             {message.text}
@@ -73,6 +83,16 @@ function Message({message}: {message: MessageType}) {
                                 onClick={() => downloadImage(message.image)}
                             />
                         )}
+
+                        {message.file && (
+                            <a href={message.file} target="_blank" rel="noopener noreferrer" className='text-rose-600'>
+                                <div className='flex gap-1'>
+                                    <i className="ri-file-line"></i>
+                                    View File
+                                </div>
+                            </a>   
+                        )}
+
                         {message.text && (
                             <p>
                                 {message.text}

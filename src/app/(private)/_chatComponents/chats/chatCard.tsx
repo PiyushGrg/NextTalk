@@ -40,6 +40,9 @@ function ChatCard({chat}:{chat:ChatType}) {
         if(chat?.lastMessage?.image){
             lastMessage = 'Sent a photo';
         }
+        if(chat?.lastMessage?.file){
+            lastMessage = 'Sent a file';
+        }
     }
 
     const isSelected = selectedChat?._id === chat._id;

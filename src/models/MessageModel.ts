@@ -24,6 +24,10 @@ const messageSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    file: {
+      type: String,
+      default: "",
+    },
     readBy: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "users",

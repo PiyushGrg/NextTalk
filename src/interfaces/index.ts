@@ -33,6 +33,7 @@ export interface MessageType {
     sender: UserType;
     text: string;
     image: string;
+    file: string;
     readBy: any;
     createdAt: string;
     updatedAt: string;

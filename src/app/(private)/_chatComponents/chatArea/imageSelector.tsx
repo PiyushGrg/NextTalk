@@ -7,6 +7,8 @@ function ImageSelector({
   setShowImageSelector,
   selectedImageFile,
   setSelectedImageFile,
+  selectedPdfFile,
+  setSelectedPdfFile,
   onSend,
   loading = false,
 }: {
@@ -14,6 +16,8 @@ function ImageSelector({
   setShowImageSelector: React.Dispatch<React.SetStateAction<boolean>>;
   selectedImageFile: File | null;
   setSelectedImageFile: React.Dispatch<React.SetStateAction<File | null>>;
+  selectedPdfFile: File | null;
+  setSelectedPdfFile: React.Dispatch<React.SetStateAction<File | null>>;
   onSend: () => void;
   loading?: boolean;
 }) {
@@ -22,6 +26,7 @@ function ImageSelector({
       open={showImageSelector}
       onCancel={() => {
         setSelectedImageFile(null);
+        setSelectedPdfFile(null);
         setShowImageSelector(false);
       }}
       title={
@@ -35,19 +40,29 @@ function ImageSelector({
       <Upload
         beforeUpload={(file) => {
             const isImage = /\.(png|jpg|jpeg)$/i.test(file.name);
-            if (!isImage) {
-                toast.error('Only image files are allowed');
+            const isFile = /\.(pdf|doc|docx)$/i.test(file.name);
+            if (!isImage && !isFile) {
+                toast.error('Only files are allowed');
                 setSelectedImageFile(null);
+                setSelectedPdfFile(null);
                 return false;
             }
             if(isImage){
                 setSelectedImageFile(file);
+                setSelectedPdfFile(null);
+                return false;
+            }
+            if(isFile){
+                setSelectedPdfFile(file);
+                setSelectedImageFile(null);
                 return false;
             }
         }}
-        accept=".png,.jpg,.jpeg"
         className="cursor-pointer"
-        onRemove={() => setSelectedImageFile(null)}
+        onRemove={() => {
+          setSelectedImageFile(null);
+          setSelectedPdfFile(null);
+        }}
         showUploadList={{ showPreviewIcon: false }}
         listType="picture-card"
         maxCount={1}
@@ -62,6 +77,7 @@ function ImageSelector({
           className="bg-primary-dark text-white px-3 rounded-md"
           onClick={() => {
             setSelectedImageFile(null);
+            setSelectedPdfFile(null);
             setShowImageSelector(false);
           }}
         >
@@ -70,7 +86,7 @@ function ImageSelector({
         <Button
           className="bg-rose-500 text-white px-3 rounded-md"
           onClick={onSend}
-          disabled={!selectedImageFile}
+          disabled={!selectedImageFile && !selectedPdfFile}
           loading={loading}
         >
           Send

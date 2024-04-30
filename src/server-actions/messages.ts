@@ -7,6 +7,7 @@ import MessageModel from "@/models/MessageModel";
 export const sendNewMessage = async (payload: {
     text?: string,
     image?: string,
+    file?: string,
     chat: string,
     sender: string,
 }) => {

@@ -22,11 +22,12 @@ function NewMessage() {
   const [showEmojiPicker, setShowEmojiPicker] = React.useState<boolean>(false);
   const [showImageSelector, setShowImageSelector] = React.useState<boolean>(false);
   const [selectedImageFile, setSelectedImageFile] = React.useState<File | null>(null);
+  const [selectedPdfFile, setSelectedPdfFile] = React.useState<File | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
 
   const onSend = async () => {
     try {
-      if(!text && !selectedImageFile){
+      if(!text && !selectedImageFile && !selectedPdfFile){
         return;
       }
 
@@ -36,10 +37,16 @@ function NewMessage() {
       if (selectedImageFile) {
         image = await UploadImageToFirebaseAndReturnUrl(selectedImageFile);
       }
+
+      let file = "";
+      if (selectedPdfFile) {
+        file = await UploadImageToFirebaseAndReturnUrl(selectedPdfFile);
+      }
       
       const socketPayload = {
         text,
         image,
+        file,
         socketMessageId: dayjs().unix(),
         sender: currentUserData,
         chat: selectedChat,
@@ -53,6 +60,7 @@ function NewMessage() {
       const dbPayload = {
         text,
         image,
+        file,
         socketMessageId: dayjs().unix(),
         sender: currentUserData?._id!,
         chat: selectedChat?._id!,
@@ -61,12 +69,13 @@ function NewMessage() {
         updatedAt: dayjs().toISOString()
       };
 
-      sendNewMessage(dbPayload);
+      await sendNewMessage(dbPayload);
 
       // console.log(response.data);
       setText('');
       setShowEmojiPicker(false);
       setSelectedImageFile(null);
+      setSelectedPdfFile(null);
       setShowImageSelector(false);
     } catch (error:any) {
       toast.error(error.message);
@@ -138,6 +147,8 @@ function NewMessage() {
           showImageSelector={showImageSelector}
           setSelectedImageFile={setSelectedImageFile}
           selectedImageFile={selectedImageFile}
+          selectedPdfFile={selectedPdfFile}
+          setSelectedPdfFile={setSelectedPdfFile}
           onSend={onSend}
           loading={loading}
         />
