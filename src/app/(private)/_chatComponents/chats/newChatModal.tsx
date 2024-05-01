@@ -23,6 +23,7 @@ function NewChatModal({showNewChatModal,setShowNewChatModal}: NewChatModalProps)
     const [users,setUsers] = useState<UserType[]>([]);
     const [loading,setLoading] = useState(false);
     const [selectedUserId,setSelectedUserId] = useState<string | null>(null);
+    const [searchText, setSearchText] = useState<string>('');
 
     const {currentUserData}: UserState = useSelector((state: any) => state.user);
     const {chats}: ChatState = useSelector((state: any) => state.chat);
@@ -30,7 +31,7 @@ function NewChatModal({showNewChatModal,setShowNewChatModal}: NewChatModalProps)
     const getUsers = async () => {
         try {
             setLoading(true);
-            const response = await GetAllUsers();
+            const response = await GetAllUsers(searchText);
             if (response.error) throw new Error("No users found");
             // console.log(response);
             setUsers(response);
@@ -64,16 +65,30 @@ function NewChatModal({showNewChatModal,setShowNewChatModal}: NewChatModalProps)
     }
 
     useEffect(() => {
-        getUsers();
-    }, []);
+        const redirectTimeout = setTimeout(() => {
+            getUsers();
+          }, 800);
+      
+          return () => {
+            clearTimeout(redirectTimeout); // Cleanup function to clear the timeout when component unmounts or dependency changes
+          };
+    }, [searchText]);
 
   return (
     <Modal isOpen={showNewChatModal} onOpenChange={()=>setShowNewChatModal(false)}>
-        <ModalContent>
+        <ModalContent className="overflow-y-auto h-[500px] custom-scrollbar">
             <>
               <ModalHeader className="flex flex-col gap-5 text-secondary/85 text-center">Create New Chat</ModalHeader>
               
               <ModalBody>
+
+                <input
+                    type="text"
+                    placeholder="Search users by name"
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    className="w-full p-2 border border-gray-300 rounded-md mb-4"
+                />
                 {!loading && users.length > 0 && (
                     <>
                         <div className='flex flex-col gap-5'>

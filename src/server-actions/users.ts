@@ -46,9 +46,18 @@ export const UpdateUserProfile = async (userId: string, payload: any) => {
   }
 };
 
-export const GetAllUsers = async () => {
+export const GetAllUsers = async (searchName:string) => {
   try {
-    const users = await UserModel.find({});
+    if(!searchName){
+      const users = await UserModel.find({});
+      return JSON.parse(JSON.stringify(users));
+    }
+    const users = await UserModel.find({
+      name: {
+        $regex: searchName,
+        $options: "i",
+      },
+    });
     return JSON.parse(JSON.stringify(users));
   } catch (error: any) {
     return {
