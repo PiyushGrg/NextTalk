@@ -42,7 +42,7 @@ function Message({message}: {message: MessageType}) {
             <div className='flex justify-end gap-2'>
                 <div className='flex flex-col gap-1'>
                     {message.image && (
-                        <Image src={message.image} className='h-40 w-40 rounded-lg rounded-tr-none' alt='message-image' />
+                        <Image src={message.image} className='h-40 w-40 rounded-lg rounded-tr-none z-0' alt='message-image' />
                     )}
 
                     {message.file && (
@@ -55,7 +55,7 @@ function Message({message}: {message: MessageType}) {
                     )}
 
                     {message.gifUrl && (
-                        <Image src={message.gifUrl} className='h-40 w-50 rounded-lg rounded-tr-none' alt='message-gif' />
+                        <Image src={message.gifUrl} className='h-40 w-50 rounded-lg rounded-tr-none z-0' alt='message-gif' />
                     )}
 
                     {message.text && (
@@ -83,7 +83,7 @@ function Message({message}: {message: MessageType}) {
                     <div className='bg-gray-200/75 rounded-lg rounded-tl-none px-3 flex flex-col py-1'>
                         <span className='text-secondary capitalize text-xs font-semibold'>{message.sender.name}</span>
                         {message.image && (
-                            <Image src={message.image} className='h-40 w-40 rounded-lg rounded-tl-none cursor-pointer' alt='message-image' 
+                            <Image src={message.image} className='h-40 w-40 rounded-lg rounded-tl-none cursor-pointer z-0' alt='message-image' 
                                 onClick={() => downloadImage(message.image)}
                             />
                         )}
@@ -98,7 +98,7 @@ function Message({message}: {message: MessageType}) {
                         )}
 
                         {message.gifUrl && (
-                            <Image src={message.gifUrl} className='h-40 w-50 rounded-lg rounded-tl-none' alt='message-gif' />
+                            <Image src={message.gifUrl} className='h-40 w-50 rounded-lg rounded-tl-none z-0' alt='message-gif' />
                         )}
 
                         {message.text && (
