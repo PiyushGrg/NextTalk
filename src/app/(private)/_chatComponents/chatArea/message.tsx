@@ -54,6 +54,10 @@ function Message({message}: {message: MessageType}) {
                         </a>   
                     )}
 
+                    {message.gifUrl && (
+                        <Image src={message.gifUrl} className='h-40 w-50 rounded-lg rounded-tr-none' alt='message-gif' />
+                    )}
+
                     {message.text && (
                         <p className='bg-secondary text-white py-2 px-3 rounded-lg rounded-tr-none'>
                             {message.text}
@@ -91,6 +95,10 @@ function Message({message}: {message: MessageType}) {
                                     View File
                                 </div>
                             </a>   
+                        )}
+
+                        {message.gifUrl && (
+                            <Image src={message.gifUrl} className='h-40 w-50 rounded-lg rounded-tl-none' alt='message-gif' />
                         )}
 
                         {message.text && (

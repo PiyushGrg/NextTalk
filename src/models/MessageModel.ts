@@ -28,6 +28,10 @@ const messageSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    gifUrl: {
+      type: String,
+      default: "",
+    },
     readBy: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "users",

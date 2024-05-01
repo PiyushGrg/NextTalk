@@ -34,6 +34,7 @@ export interface MessageType {
     text: string;
     image: string;
     file: string;
+    gifUrl: string;
     readBy: any;
     createdAt: string;
     updatedAt: string;

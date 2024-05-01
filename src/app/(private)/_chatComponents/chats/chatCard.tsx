@@ -43,6 +43,9 @@ function ChatCard({chat}:{chat:ChatType}) {
         if(chat?.lastMessage?.file){
             lastMessage = 'Sent a file';
         }
+        if(chat?.lastMessage?.gifUrl){
+            lastMessage = 'Sent a gif';
+        }
     }
 
     const isSelected = selectedChat?._id === chat._id;

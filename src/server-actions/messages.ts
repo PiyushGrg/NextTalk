@@ -8,6 +8,7 @@ export const sendNewMessage = async (payload: {
     text?: string,
     image?: string,
     file?: string,
+    gifUrl?: string,
     chat: string,
     sender: string,
 }) => {
