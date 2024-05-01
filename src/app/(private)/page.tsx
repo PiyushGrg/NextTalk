@@ -8,7 +8,9 @@ export default function Home() {
   
   return (
     <div className="flex h-[91vh]">
-      <Chats />
+      <div className="h-full overflow-y-auto custom-scrollbar">
+        <Chats />
+      </div>
       <Divider orientation="vertical" className="h-full border-gray-300 px-0 mx-0" />
       <ChatArea />
     </div>
