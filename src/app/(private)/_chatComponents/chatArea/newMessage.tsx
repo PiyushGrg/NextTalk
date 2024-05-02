@@ -76,7 +76,7 @@ function NewMessage() {
         updatedAt: dayjs().toISOString()
       };
 
-      await sendNewMessage(dbPayload);
+      sendNewMessage(dbPayload);
 
       // console.log(response.data);
       setText('');
