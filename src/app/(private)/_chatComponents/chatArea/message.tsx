@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import { Image } from '@nextui-org/react';
 import { formatDateTime } from '@/helpers/DateFormat';
 import toast from 'react-hot-toast';
+import MessageOptions from './messageOptions';
+import SenderMessageOptions from './senderMessageOptions';
 
 function Message({message}: {message: MessageType}) {
 
@@ -59,9 +61,7 @@ function Message({message}: {message: MessageType}) {
                     )}
 
                     {message.text && (
-                        <p className='bg-secondary text-white py-2 px-3 rounded-lg rounded-tr-none'>
-                            {message.text}
-                        </p>
+                        <MessageOptions message={message} />
                     )}
                     <div className='flex flex-row justify-between'>
                         <span className='text-gray-500 text-xs'>
@@ -102,9 +102,7 @@ function Message({message}: {message: MessageType}) {
                         )}
 
                         {message.text && (
-                            <p>
-                                {message.text}
-                            </p>
+                            <SenderMessageOptions message={message} />
                         )}
                     </div>
                     <span className='text-gray-500 text-xs'>

@@ -87,7 +87,7 @@ function NewChatModal({showNewChatModal,setShowNewChatModal}: NewChatModalProps)
                     placeholder="Search users by name"
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded-md mb-4"
+                    className="w-full p-2 border border-gray-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-secondary/75"
                 />
                 {!loading && users.length > 0 && (
                     <>

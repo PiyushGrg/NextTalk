@@ -7,7 +7,7 @@ import { Input,Button } from 'antd'
 import dayjs from 'dayjs';
 import EmojiPicker from 'emoji-picker-react';
 import GifPicker from 'gif-picker-react';
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import ImageSelector from './imageSelector';
@@ -27,6 +27,8 @@ function NewMessage() {
   const [selectedImageFile, setSelectedImageFile] = React.useState<File | null>(null);
   const [selectedPdfFile, setSelectedPdfFile] = React.useState<File | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const emojiPickerRef = useRef<HTMLDivElement>(null);
+  const gifPickerRef = useRef<HTMLDivElement>(null);
 
   const onSend = async () => {
     try {
@@ -106,11 +108,38 @@ function NewMessage() {
   },[selectedChat,text,gifUrl]);
 
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        emojiPickerRef.current &&
+        !emojiPickerRef.current.contains(event.target as Node) &&
+        !inputRef.current?.contains(event.target as Node)
+      ) {
+        setShowEmojiPicker(false);
+      }
+
+      if (
+        gifPickerRef.current &&
+        !gifPickerRef.current.contains(event.target as Node) &&
+        !inputRef.current?.contains(event.target as Node)
+      ) {
+        setShowGifPicker(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+
   return (
     <div className='p-3 bg-gray-100 border-t border-solid border-gray-400 flex gap-5 items-center relative'>
       <div className='flex gap-3'>
           {showEmojiPicker && 
-            <div className='absolute left-14 bottom-20'>
+            <div className='absolute left-14 bottom-20' ref={emojiPickerRef}>
               <EmojiPicker
                 height={400}
                 onEmojiClick={(emojiObject: any) => {
@@ -122,7 +151,7 @@ function NewMessage() {
           }
 
           {showGifPicker && 
-            <div className='absolute left-14 bottom-20'>
+            <div className='absolute left-14 bottom-20' ref={gifPickerRef}>
               <GifPicker
                 tenorApiKey='AIzaSyDtW2rt98gchBHm9n2ifG30Beku0AiBq3E'
                 height={400}
