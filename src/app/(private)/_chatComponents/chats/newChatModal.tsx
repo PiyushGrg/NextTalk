@@ -75,8 +75,8 @@ function NewChatModal({showNewChatModal,setShowNewChatModal}: NewChatModalProps)
     }, [searchText]);
 
   return (
-    <Modal isOpen={showNewChatModal} onOpenChange={()=>setShowNewChatModal(false)}>
-        <ModalContent className="overflow-y-auto h-[500px] custom-scrollbar">
+    <Modal isOpen={showNewChatModal} onOpenChange={()=>setShowNewChatModal(false)} placement='center' scrollBehavior='inside' backdrop='blur'>
+        <ModalContent className="overflow-y-auto h-[400px] md:h-[500px] custom-scrollbar">
             <>
               <ModalHeader className="flex flex-col gap-5 text-secondary/85 text-center">Create New Chat</ModalHeader>
               
@@ -105,8 +105,8 @@ function NewChatModal({showNewChatModal,setShowNewChatModal}: NewChatModalProps)
                                 return (
                                     <div key={user._id} className='flex justify-between items-center'>
                                         <div className='flex items-center gap-5'>
-                                            <Avatar src={user.profilePicUrl} alt={user.name} className='w-10 h-10 rounded-full' />
-                                            <span className='text-gray-600 capitalize'>{user.name}</span>
+                                            <Avatar src={user.profilePicUrl} alt={user.name} className='w-10 h-10 rounded-full sm:w-12 sm:h-12' />
+                                            <span className='text-gray-600 capitalize sm:text-lg'>{user.name}</span>
                                         </div>
 
                                         <Button className='bg-primary-dark/85 border-none' size='sm' isLoading={selectedUserId===user._id && loading}

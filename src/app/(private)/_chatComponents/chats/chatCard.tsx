@@ -3,7 +3,7 @@ import { ChatType } from '@/interfaces'
 import { ChatState, SetSelectedChat } from '@/redux/chatSlice';
 import { UserState } from '@/redux/userSlice';
 import { Avatar } from '@nextui-org/react';
-import React from 'react'
+import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 function ChatCard({chat}:{chat:ChatType}) {
@@ -12,6 +12,7 @@ function ChatCard({chat}:{chat:ChatType}) {
 
     const {currentUserData,onlineUsers}: UserState = useSelector((state: any) => state.user);
     const {selectedChat}:ChatState = useSelector((state: any) => state.chat);
+    const chatCardRef = useRef<HTMLDivElement>(null);
 
     let chatName = '';
     let chatImage = '';
@@ -31,8 +32,8 @@ function ChatCard({chat}:{chat:ChatType}) {
 
 
     if(chat?.lastMessage){
-        lastMessageSenderName = chat?.lastMessage?.sender._id === currentUserData?._id! ? 'You :' : `${chat?.lastMessage?.sender.name} :`;
-        lastMessageTime = formatDateTime(chat.lastMessage.createdAt);
+        lastMessageSenderName = chat?.lastMessage?.sender?._id === currentUserData?._id! ? 'You :' : `${chat?.lastMessage?.sender?.name} :`;
+        lastMessageTime = formatDateTime(chat.lastMessage?.createdAt);
 
         if(chat?.lastMessage?.text){
             lastMessage = chat.lastMessage.text.length > 15 ? chat.lastMessage.text.substring(0, 15) + '...' : chat.lastMessage.text;
@@ -71,18 +72,23 @@ function ChatCard({chat}:{chat:ChatType}) {
         }
     }
 
+    const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        const isUserClicked = (event.target as HTMLElement).classList.contains('person');
+        if (isUserClicked || event.target === chatCardRef.current) {
+          dispatch(SetSelectedChat(chat));
+        }
+    };
+
   return (
     <div className={`flex justify-between py-3 cursor-pointer px-2 rounded
         ${isSelected ? "bg-primary-dark/40" : "hover:bg-primary-default/60"}`}
-        onClick={() => {
-            dispatch(SetSelectedChat(chat));
-        }}
+        ref={chatCardRef} onClick={handleClick}
     >
         <div className='flex gap-5 items-center'>
             <Avatar src={chatImage} alt="" className='w-10 h-10 rounded-full'/>
             <div className='flex flex-col gap-1'>
-                <span className='capitalize text-gray-700 text-sm flex gap-2 items-center'>{chatName} {onlineIndicator()}</span>
-                <span className='capitalize text-gray-500 text-xs'>{lastMessageSenderName} {lastMessage}</span>
+                <span className='capitalize text-gray-700 text-sm flex gap-2 items-center person'>{chatName} {onlineIndicator()}</span>
+                <span className='capitalize text-gray-500 text-xs person'>{lastMessageSenderName} {lastMessage}</span>
             </div>
         </div>
 
