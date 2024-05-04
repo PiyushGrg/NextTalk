@@ -47,6 +47,7 @@ function RecipientInfo({showRecipientInfo,setShowRecipientInfo}: RecipientInfoPr
       style={{
         backgroundColor: "#E1F7F5"
       }}
+      width={340}
     >
       <div className="flex justify-center flex-col items-center gap-5">
         <Avatar src={chatImage} alt="" className="w-28 h-28 rounded-full" />

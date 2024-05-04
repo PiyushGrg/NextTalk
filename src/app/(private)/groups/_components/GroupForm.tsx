@@ -66,42 +66,44 @@ function GroupForm({users,initialData = null}: {users: UserType[];initialData?: 
   };
 
   return (
-    <div className="grid grid-cols-2">
-      <div className="flex flex-col gap-5">
+    <div className="flex flex-col md:flex-row md:gap-40">
+      <div className="md:w-1/2 mb-5 md:mb-0">
         <span className="text-gray-500 text-sm">
           Select users to add to the group
         </span>
-        {users.map((user) => {
-          if (user._id === currentUserData?._id!) return null;
-          return (
-            <div key={user._id} className="flex gap-5 items-center">
-              <Checkbox 
-                checked={selectedUserIds.includes(user._id)}
-                color="secondary"
-                size="sm"
-                onChange={() => {
-                  if (selectedUserIds.includes(user._id)) {
-                    setSelectedUserIds(
-                      selectedUserIds.filter((id) => id !== user._id)
-                    );
-                  } else {
-                    setSelectedUserIds([...selectedUserIds, user._id]);
-                  }
-                }}
-                isSelected={selectedUserIds.includes(user._id)}
-              />
-              <Avatar
-                src={user.profilePicUrl}
-                alt="avatar"
-                className="w-8 h-8 rounded-full"
-              />
-              <span className="text-gray-500 text-sm capitalize">{user.name}</span>
-            </div>
-          );
-        })}
+        <div className="mt-2 flex flex-col gap-3 md:gap-4 max-h-96 overflow-y-auto custom-scrollbar">
+          {users.map((user) => {
+            if (user._id === currentUserData?._id!) return null;
+            return (
+              <div key={user._id} className="flex gap-5 items-center">
+                <Checkbox 
+                  checked={selectedUserIds.includes(user._id)}
+                  color="secondary"
+                  size="sm"
+                  onChange={() => {
+                    if (selectedUserIds.includes(user._id)) {
+                      setSelectedUserIds(
+                        selectedUserIds.filter((id) => id !== user._id)
+                      );
+                    } else {
+                      setSelectedUserIds([...selectedUserIds, user._id]);
+                    }
+                  }}
+                  isSelected={selectedUserIds.includes(user._id)}
+                />
+                <Avatar
+                  src={user.profilePicUrl}
+                  alt="avatar"
+                  className="w-8 h-8 rounded-full"
+                />
+                <span className="text-gray-500 text-sm capitalize">{user.name}</span>
+              </div>
+            );
+          })}
+        </div>
       </div>
       
-      <div>
+      <div className="md:w-1/2">
         <Form layout="vertical" onFinish={onFinish} initialValues={initialData}>
           <Form.Item
             name="groupName"

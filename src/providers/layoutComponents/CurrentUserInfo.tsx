@@ -82,6 +82,7 @@ function CurrentUserInfo({showCurrentUserInfo,setShowCurrentUserInfo}: CurrentUs
       style={{
         backgroundColor: "#9AC8CD"
       }}
+      width={340}
     >
       {currentUserData && (
         <div className="flex flex-col gap-5">

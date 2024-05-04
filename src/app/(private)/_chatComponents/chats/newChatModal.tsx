@@ -105,8 +105,8 @@ function NewChatModal({showNewChatModal,setShowNewChatModal}: NewChatModalProps)
                                 return (
                                     <div key={user._id} className='flex justify-between items-center'>
                                         <div className='flex items-center gap-5'>
-                                            <Avatar src={user.profilePicUrl} alt={user.name} className='w-10 h-10 rounded-full sm:w-12 sm:h-12' />
-                                            <span className='text-gray-600 capitalize sm:text-lg'>{user.name}</span>
+                                            <Avatar src={user.profilePicUrl} alt={user.name} className='w-10 h-10 rounded-full md:w-12 md:h-12' />
+                                            <span className='text-gray-600 capitalize md:text-lg'>{user.name}</span>
                                         </div>
 
                                         <Button className='bg-primary-dark/85 border-none' size='sm' isLoading={selectedUserId===user._id && loading}
