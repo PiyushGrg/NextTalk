@@ -1,8 +1,9 @@
 'use server';
-
+import { connectDB } from "@/config/dbConfig";
 import ChatModel from "@/models/ChatModel";
 import MessageModel from "@/models/MessageModel";
 
+connectDB();
 
 export const sendNewMessage = async (payload: {
     text?: string,
