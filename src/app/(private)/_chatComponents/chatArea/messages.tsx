@@ -112,7 +112,7 @@ function Messages() {
   }, [messages]);
 
   return (
-    <div className='flex-1 p-3 overflow-y-scroll' ref={messagesDivRef}>
+    <div className='flex-1 p-3 overflow-y-scroll mt-[130px] md:mt-0' ref={messagesDivRef}>
       <div className='flex flex-col gap-3'>
         {messages.map((message: MessageType) => {
           return <Message key={message._id} message={message} />;
