@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import LayoutProvider from "@/providers/LayoutProvider";
@@ -9,6 +9,10 @@ import 'remixicon/fonts/remixicon.css';
 export const metadata: Metadata = {
   title: "NextTalk",
   description: "A real time chat web app where you can talk to people.",
+};
+
+export const viewport: Viewport = {
+  minimumScale: 1,
 };
 
 export default function RootLayout({

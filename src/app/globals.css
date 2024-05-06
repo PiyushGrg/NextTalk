@@ -74,3 +74,21 @@ input {
 textarea{
   min-height: 100px;
 }
+
+@media screen and (max-width: 768px){
+    #header{
+      position: fixed;
+      z-index: 100;
+    }
+
+    #recipient{
+      position: fixed;
+      z-index: 100;
+      top: 65px;
+      width: 100%;
+    }
+
+    #home{
+      margin-top: 65px;
+    }
+}

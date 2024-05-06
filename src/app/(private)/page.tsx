@@ -26,7 +26,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex h-[91vh] flex-col md:flex-row">
+    <div className="flex h-screen md:h-[calc(100vh-65px)] flex-col md:flex-row">
       {!showChatArea && !selectedChat && (
         <div className="h-full overflow-y-auto custom-scrollbar">
           <Chats />

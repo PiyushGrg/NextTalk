@@ -136,10 +136,10 @@ function NewMessage() {
 
 
   return (
-    <div className='p-3 bg-gray-100 border-t border-solid border-gray-400 flex gap-5 items-center relative'>
-      <div className='flex gap-3'>
+    <div className='p-3 bg-gray-100 border-t border-solid border-gray-400 flex gap-2 md:gap-5 items-center relative'>
+      <div className='flex gap-1 md:gap-3'>
           {showEmojiPicker && 
-            <div className='absolute left-14 bottom-20' ref={emojiPickerRef}>
+            <div className='md:absolute md:left-14 md:bottom-20 z-[100] absolute left-1 bottom-20' ref={emojiPickerRef}>
               <EmojiPicker
                 height={400}
                 onEmojiClick={(emojiObject: any) => {
@@ -151,7 +151,7 @@ function NewMessage() {
           }
 
           {showGifPicker && 
-            <div className='absolute left-14 bottom-20' ref={gifPickerRef}>
+            <div className='md:absolute md:left-14 md:bottom-20 z-[100] absolute left-1 bottom-20' ref={gifPickerRef}>
               <GifPicker
                 tenorApiKey='AIzaSyDtW2rt98gchBHm9n2ifG30Beku0AiBq3E'
                 height={400}
@@ -202,7 +202,7 @@ function NewMessage() {
       <div className='flex-1'>
         {!gifUrl && (
           <input placeholder='Type a message' 
-            className='w-full h-[50px] px-3 border border-solid border-gray-300 outline-none focus:outline-none focus:border-secondary'
+            className='w-full h-[40px] md:h-[50px] px-3 border border-solid border-gray-300 outline-none focus:outline-none focus:border-secondary'
             value={text}
             onChange={(e) => setText(e.target.value)} 
             onKeyDown={(e) => {
@@ -226,7 +226,7 @@ function NewMessage() {
         }
       </div>
 
-      <Button onClick={onSend} className='border border-solid border-secondary bg-white' size='large'>
+      <Button onClick={onSend} className='border border-solid border-secondary bg-white' size='middle'>
         <Image src='/send.svg' alt='' className='h-[20px] w-[20px]' />
       </Button>
       
