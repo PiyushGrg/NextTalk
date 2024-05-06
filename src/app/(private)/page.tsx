@@ -33,7 +33,9 @@ export default function Home() {
         </div>
       )}
       {!showChatArea && selectedChat && (
-        <ChatArea />
+        <div className="overflow-y-scroll mt-[129px] mb-[65px]">
+          <ChatArea />
+        </div>
       )}
       {showChatArea && (
         <>

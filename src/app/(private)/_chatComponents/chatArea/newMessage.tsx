@@ -136,7 +136,7 @@ function NewMessage() {
 
 
   return (
-    <div className='p-3 bg-gray-100 border-t border-solid border-gray-400 flex gap-2 md:gap-5 items-center relative'>
+    <div className='p-3 bg-gray-100 border-t border-solid border-gray-400 flex gap-2 md:gap-5 items-center relative' id='newMessage'>
       <div className='flex gap-1 md:gap-3'>
           {showEmojiPicker && 
             <div className='md:absolute md:left-14 md:bottom-20 z-[100] absolute left-1 bottom-20' ref={emojiPickerRef}>
