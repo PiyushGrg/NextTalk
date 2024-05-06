@@ -59,7 +59,7 @@ function GroupForm({users,initialData = null}: {users: UserType[];initialData?: 
       router.refresh();
     } catch (error: any) {
     //   console.log(error);
-      toast.error(error.message);
+      toast.error(error?.message);
     } finally {
       setLoading(false);
     }

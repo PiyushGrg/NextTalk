@@ -76,7 +76,7 @@ function NewMessage() {
         updatedAt: dayjs().toISOString()
       };
 
-      sendNewMessage(dbPayload);
+      await sendNewMessage(dbPayload);
 
       // console.log(response.data);
       setText('');
@@ -87,7 +87,7 @@ function NewMessage() {
       setSelectedPdfFile(null);
       setShowImageSelector(false);
     } catch (error:any) {
-      toast.error(error.message);
+      toast.error(error?.message);
     } finally {
       setLoading(false);
     }

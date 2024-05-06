@@ -36,7 +36,7 @@ function NewChatModal({showNewChatModal,setShowNewChatModal}: NewChatModalProps)
             // console.log(response);
             setUsers(response);
         } catch (error: any) {
-            toast.error(error.message);
+            toast.error(error?.message);
         } finally {
             setLoading(false);
         }
@@ -58,7 +58,7 @@ function NewChatModal({showNewChatModal,setShowNewChatModal}: NewChatModalProps)
             dispatch(SetChats(response));
             setShowNewChatModal(false);
         } catch (error: any) {
-            toast.error(error.message);
+            toast.error(error?.message);
         } finally {
             setLoading(false);
         }

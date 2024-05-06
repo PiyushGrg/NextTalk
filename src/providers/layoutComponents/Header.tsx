@@ -29,7 +29,7 @@ function Header() {
             }
             dispatch(SetCurrentUser(response as UserType));
         } catch (error: any) {
-          toast.error(error.message);
+          toast.error(error?.message);
         }
     };
     

@@ -52,7 +52,7 @@ function CurrentUserInfo({showCurrentUserInfo,setShowCurrentUserInfo}: CurrentUs
         toast.success("Profile picture updated successfully");
         setShowCurrentUserInfo(false);
       } catch (error: any) {
-        toast.error(error.message);
+        toast.error(error?.message);
       } finally {
         setLoading(false);
         setSelectedFile(null);
@@ -68,7 +68,7 @@ function CurrentUserInfo({showCurrentUserInfo,setShowCurrentUserInfo}: CurrentUs
           toast.success("Logged out successfully");
           router.push("/sign-in");
         } catch (error: any) {
-          toast.error(error.message);
+          toast.error(error?.message);
         } finally {
           setLoading(false);
         }
