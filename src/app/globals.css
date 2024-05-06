@@ -98,4 +98,8 @@ textarea{
       bottom: 0;
       width: 100%;
     }
+
+    .cl-signUp-start{
+      width: 320px !important;
+    }
 }
