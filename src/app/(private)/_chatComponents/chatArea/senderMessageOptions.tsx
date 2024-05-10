@@ -58,7 +58,7 @@ const SenderMessageOptions = ({ message }: {message: MessageType}) => {
 
 
       {showOptions && (
-        <div className="absolute right-0 mt-2 bg-white shadow-md rounded-md py-2 z-10 w-36" ref={optionsRef}>
+        <div className="absolute right-0 mt-2 bg-white shadow-md rounded-md py-2 z-[1000] w-36" ref={optionsRef}>
           <div className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleCopy}>
             <svg
               xmlns="http://www.w3.org/2000/svg"

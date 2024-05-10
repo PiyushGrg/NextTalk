@@ -58,7 +58,7 @@ const MessageOptions = ({ message }: {message: MessageType}) => {
 
 
       {showOptions && (
-        <div className="absolute right-0 mt-2 bg-white shadow-md rounded-md py-2 z-10 w-36" ref={optionsRef}>
+        <div className="absolute right-0 mt-2 bg-white shadow-md rounded-md py-2 z-[1000] w-36" ref={optionsRef}>
           <div className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
