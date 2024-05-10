@@ -13,6 +13,7 @@ const SenderMessageOptions = ({ message }: {message: MessageType}) => {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(message.text || '');
+    setShowOptions(false);
     toast.success('Text copied to clipboard');
   };
 

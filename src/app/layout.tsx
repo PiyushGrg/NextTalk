@@ -7,7 +7,7 @@ import ReduxProvider from "@/providers/ReduxProvider";
 import 'remixicon/fonts/remixicon.css';
 
 export const metadata: Metadata = {
-  title: "NextTalk",
+  title: "NextTalk: Real Time Chat App",
   description: "A real time chat web app where you can talk to people.",
 };
 
